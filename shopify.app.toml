@@ -7,7 +7,7 @@ name = "bulk-pricing-app"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products,write_metaobjects,write_metaobject_definitions"
+scopes = "write_products,write_metaobjects,write_metaobject_definitions,write_discounts"
 
 [product.metafields.app.demo_info]
 type = "single_line_text_field"
@@ -16,6 +16,15 @@ description = "Tracks products created by the Shopify app template for developme
 
   [product.metafields.app.demo_info.access]
   admin = "merchant_read_write"
+
+[discount.metafields.app.function-configuration]
+type = "json"
+name = "Function configuration"
+description = "Quantity-based pricing tiers used by the bulk pricing discount function"
+
+  [discount.metafields.app.function-configuration.access]
+  admin = "merchant_read_write"
+  storefront = "none"
 
 [metaobjects.app.example]
 name = "Example"

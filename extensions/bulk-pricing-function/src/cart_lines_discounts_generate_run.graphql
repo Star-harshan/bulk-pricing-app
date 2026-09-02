@@ -1,17 +1,43 @@
-# [START discount-function.graphql.cart]
 query Input {
   cart {
     lines {
       id
+      quantity
+
+      merchandise {
+        __typename
+
+        ... on ProductVariant {
+          id
+          product {
+            id
+            # Keep in sync with ALLOWED_PRODUCT_TAGS in app/bulk-pricing.server.js.
+            # Shopify Function input queries are static, so a tag must be listed
+            # here (and the function redeployed) before a rule can reference it.
+            hasTags(tags: ["bulk-pricing", "clearance", "sale"]) {
+              tag
+              hasTag
+            }
+          }
+        }
+      }
+
       cost {
-        subtotalAmount {
+        amountPerQuantity {
           amount
         }
       }
     }
   }
+
   discount {
     discountClasses
+
+    metafield(
+      namespace: "$app"
+      key: "function-configuration"
+    ) {
+      value
+    }
   }
 }
-# [END discount-function.graphql.cart]
