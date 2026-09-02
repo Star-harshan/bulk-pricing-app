@@ -1,0 +1,23 @@
+api_version = "2026-07"
+
+[[extensions]]
+name = "t:name"
+handle = "bulk-pricing-function"
+type = "function"
+uid = "de350151-b700-426b-393d-7aa388243ff03e006bd5"
+description = "t:description"
+
+  [[extensions.targeting]]
+  target = "cart.lines.discounts.generate.run"
+  input_query = "src/cart_lines_discounts_generate_run.graphql"
+  export = "cart_lines_discounts_generate_run"
+
+  [[extensions.targeting]]
+  target = "cart.delivery-options.discounts.generate.run"
+  input_query = "src/cart_delivery_options_discounts_generate_run.graphql"
+  export = "cart_delivery_options_discounts_generate_run"
+
+  [extensions.build]
+  command = "cargo build --target=wasm32-unknown-unknown --release"
+  path = "target/wasm32-unknown-unknown/release/bulk-pricing-function.wasm"
+  watch = [ "src/**/*.rs" ]
