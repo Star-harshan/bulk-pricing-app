@@ -21,3 +21,6 @@ description = "t:description"
   command = "cargo build --target=wasm32-unknown-unknown --release"
   path = "target/wasm32-unknown-unknown/release/bulk-pricing-function.wasm"
   watch = [ "src/**/*.rs" ]
+
+  [extensions.ui]
+  handle = "bulk-pricing-settings"

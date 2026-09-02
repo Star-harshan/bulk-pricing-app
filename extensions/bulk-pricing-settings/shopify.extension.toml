@@ -1,0 +1,16 @@
+api_version = "2026-07"
+
+[[extensions]]
+name = "t:name"
+description = "t:description"
+handle = "bulk-pricing-settings"
+uid = "4d994301-c73e-5571-71c1-734aec74bd246baca17c"
+type = "ui_extension"
+
+  [[extensions.targeting]]
+  module = "./DiscountFunctionSettings.jsx"
+  target = "admin.discount-details.function-settings.render"
+
+  [[extensions.metafields]]
+  namespace = "$app"
+  key = "function-configuration"

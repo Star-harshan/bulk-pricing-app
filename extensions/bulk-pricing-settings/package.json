@@ -1,0 +1,11 @@
+{
+  "name": "bulk-pricing-settings",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@preact/signals": "^2.11.1",
+    "@shopify/ui-extensions": "^2026.7.0",
+    "preact": "^10.29.8"
+  }
+}
