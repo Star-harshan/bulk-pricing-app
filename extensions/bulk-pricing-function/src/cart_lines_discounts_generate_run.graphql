@@ -1,4 +1,4 @@
-query Input {
+query CartLinesRunInput {
   cart {
     lines {
       id

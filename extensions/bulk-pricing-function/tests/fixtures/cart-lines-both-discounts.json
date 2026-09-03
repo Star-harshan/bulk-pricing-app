@@ -1,54 +1,64 @@
 {
   "payload": {
-    "export": "cart_lines_discounts_generate_run",
+    "export": "cart-lines-discounts-generate-run",
     "target": "cart.lines.discounts.generate.run",
     "input": {
       "cart": {
         "lines": [
           {
             "id": "gid://shopify/CartLine/0",
-            "cost": {
-              "subtotalAmount": {
-                "amount": "6.0"
+            "quantity": 12,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "id": "gid://shopify/ProductVariant/0",
+              "product": {
+                "id": "gid://shopify/Product/1",
+                "hasTags": [
+                  { "tag": "bulk-pricing", "hasTag": false },
+                  { "tag": "clearance", "hasTag": false },
+                  { "tag": "sale", "hasTag": false }
+                ]
               }
+            },
+            "cost": {
+              "amountPerQuantity": { "amount": "10.00" }
+            }
+          },
+          {
+            "id": "gid://shopify/CartLine/1",
+            "quantity": 6,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "id": "gid://shopify/ProductVariant/1",
+              "product": {
+                "id": "gid://shopify/Product/2",
+                "hasTags": [
+                  { "tag": "bulk-pricing", "hasTag": true },
+                  { "tag": "clearance", "hasTag": false },
+                  { "tag": "sale", "hasTag": false }
+                ]
+              }
+            },
+            "cost": {
+              "amountPerQuantity": { "amount": "20.00" }
             }
           }
         ]
       },
       "discount": {
-        "discountClasses": ["PRODUCT", "ORDER", "SHIPPING"]
+        "discountClasses": ["PRODUCT"],
+        "metafield": {
+          "value": "{\"rules\":[{\"productId\":\"gid://shopify/Product/1\",\"tiers\":[{\"min\":10,\"max\":null,\"price\":\"8.00\"}]}],\"percentageTiers\":[{\"min\":5,\"max\":null,\"percentage\":15,\"tag\":\"bulk-pricing\"}]}"
+        }
       }
     },
-    "inputBytes": 126,
     "output": {
       "operations": [
         {
-          "orderDiscountsAdd": {
-            "candidates": [
-              {
-                "message": "10% OFF ORDER",
-                "targets": [
-                  {
-                    "orderSubtotal": {
-                      "excludedCartLineIds": []
-                    }
-                  }
-                ],
-                "value": {
-                  "percentage": {
-                    "value": "10.0"
-                  }
-                }
-              }
-            ],
-            "selectionStrategy": "FIRST"
-          }
-        },
-        {
           "productDiscountsAdd": {
+            "selectionStrategy": "ALL",
             "candidates": [
               {
-                "message": "20% OFF PRODUCT",
                 "targets": [
                   {
                     "cartLine": {
@@ -56,14 +66,30 @@
                     }
                   }
                 ],
+                "message": "Bulk pricing: 12 units",
+                "value": {
+                  "fixedAmount": {
+                    "amount": "2",
+                    "appliesToEachItem": true
+                  }
+                }
+              },
+              {
+                "targets": [
+                  {
+                    "cartLine": {
+                      "id": "gid://shopify/CartLine/1"
+                    }
+                  }
+                ],
+                "message": "Bulk pricing: 15% off for 6 units (bulk-pricing)",
                 "value": {
                   "percentage": {
-                    "value": "20.0"
+                    "value": "15"
                   }
                 }
               }
-            ],
-            "selectionStrategy": "FIRST"
+            ]
           }
         }
       ]

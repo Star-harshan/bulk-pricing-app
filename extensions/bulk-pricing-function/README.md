@@ -1,16 +1,22 @@
-# Shopify Function development with Rust
+# Shopify Function development with JavaScript
 
 ## Dependencies
 
-- [Install Rust](https://www.rust-lang.org/tools/install)
-  - On Windows, Rust requires the [Microsoft C++ Build Tools](https://docs.microsoft.com/en-us/windows/dev-environment/rust/setup). Be sure to select the _Desktop development with C++_ workload when installing them.
+- A supported LTS version of [Node.js](https://nodejs.org/)
+- `@shopify/shopify_function` (declared in `package.json`), which the CLI wires up automatically
 
 ## Building the function
 
-You can build this individual function using `cargo build`.
+The Shopify CLI compiles `src/index.js` to Wasm using Javy. Build it with:
 
 ```shell
-cargo build --target=wasm32-unknown-unknown --release
+shopify app function build
 ```
 
-The Shopify CLI `build` command will also execute this, based on the configuration in `shopify.extension.toml`.
+The Shopify CLI `build`/`dev` commands also run this automatically, based on the configuration in `shopify.extension.toml`. Before building, regenerate the GraphQL input types with:
+
+```shell
+shopify app function typegen
+```
+
+This writes `generated/api.js`, which `src/index.js`'s targets import for input/output types and the runtime enum values (`DiscountClass`, `ProductDiscountSelectionStrategy`, etc.).

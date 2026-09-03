@@ -1,4 +1,4 @@
-query Input {
+query CartDeliveryOptionsRunInput {
   discount {
     discountClasses
   }
